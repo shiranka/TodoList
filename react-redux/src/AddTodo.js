@@ -17,7 +17,7 @@ class AddTodo extends Component {
         })
     }
     
-    render(){
+    render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>

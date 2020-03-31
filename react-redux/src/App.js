@@ -9,29 +9,24 @@ class App extends Component {
       {id: 2, content: 'play with my dogs'}
     ]
   }
-  deleteTodo = (id) => {
-    const todos = this.state.todos.filter(todo => {
-      return todo.id !== id
-    })
-    this.setState({
-      todos
-    })
+  deleteTodo = (id) => {    
+    let todos = [...this.state.todos]
+    const todoPos = todos.map(function(x) {return x.id; }).indexOf(id)
+    todos.splice(todoPos, 1)
+    this.setState({todos})  
   }
   addTodo = (todo) => {
     todo.id = Math.random()
     let todos = [...this.state.todos, todo]
-    this.setState({
-      todos
-    })
+    this.setState({ todos })
   }
-  render(){
-    return(
-      <div className='App'>
-        <h1>Todo's </h1>
+  render() {
+    return (
+      <div>
+        <h1>Todos </h1>
         <Todos todos={this.state.todos} deleteTodo={this.deleteTodo}/>
         <AddTodo addTodo={this.addTodo}/>
       </div>
-
     )
   }
 }
