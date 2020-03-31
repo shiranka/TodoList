@@ -11,7 +11,7 @@ class App extends Component {
   }
   deleteTodo = (id) => {    
     let todos = [...this.state.todos]
-    const todoPos = todos.map(function(x) {return x.id; }).indexOf(id)
+    const todoPos = todos.map((x) => {return x.id}).indexOf(id)
     todos.splice(todoPos, 1)
     this.setState({todos})  
   }
