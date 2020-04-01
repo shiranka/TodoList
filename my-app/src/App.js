@@ -1,16 +1,16 @@
 import React from 'react'
-import Todos from './Todos'
-import AddTodo from './AddTodo'
+import TasksList from './components/TasksList'
+import TaskForm from './components/TaskForm'
 import { Provider } from 'react-redux'
-import { store } from './redux.js'
+import { store } from './redux'
 
 function App() {
   return (
     <Provider store={store}>
       <div>
-        <h1>Todos:</h1>
-        <Todos />
-        <AddTodo />
+        <h1>Your tasks for today:</h1>
+        <TasksList />
+        <TaskForm />
       </div>
     </Provider>
   )

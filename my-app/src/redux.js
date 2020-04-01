@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 
 const initialState = {
-    todos: [
+    tasks: [
         {id: 1, content: 'buy some milk'},
         {id: 2, content: 'play with my dogs'}
     ]
@@ -14,18 +14,18 @@ export const store = createStore(
 
 function reducer(state, {type, payload}){
     switch(type){
-        case 'add_todo':
+        case 'add_task':
             return {
                 ...state,
-                todos: [...state.todos, payload]  
+                tasks: [...state.tasks, payload]  
             }
-        case 'delete_todo':{ 
-            let todos = [...state.todos]
-            const todoPos = todos.map((x) => {return x.id; }).indexOf(payload)
-            todos.splice(todoPos, 1)  
+        case 'delete_task':{ 
+            let tasks = [...state.tasks]
+            const taskPos = tasks.map((task) => {return task.id}).indexOf(payload)
+            tasks.splice(taskPos, 1)  
             return {               
                 ...state,                            
-                todos
+                tasks
             }
         }
         default:
@@ -33,12 +33,12 @@ function reducer(state, {type, payload}){
     }
 }
 
-export const addTodoAction = (todo) => ({
-    type: 'add_todo',
-    payload: todo
+export const addTaskAction = (task) => ({
+    type: 'add_task',
+    payload: task
 })
 
-export const deleteTodoAction = (id) => ({
-    type: 'delete_todo',
+export const deleteTaskAction = (id) => ({
+    type: 'delete_task',
     payload: id
 })
