@@ -14,12 +14,12 @@ export const store = createStore(
 
 function reducer(state, {type, payload}){
     switch(type){
-        case 'add_task':
+        case 'ADD_TASK':
             return {
                 ...state,
                 tasks: [...state.tasks, payload]  
             }
-        case 'delete_task':{ 
+        case 'DELETE_TASK':{ 
             let tasks = [...state.tasks]
             const taskPos = tasks.map((task) => {return task.id}).indexOf(payload)
             tasks.splice(taskPos, 1)  
@@ -34,11 +34,11 @@ function reducer(state, {type, payload}){
 }
 
 export const addTaskAction = (task) => ({
-    type: 'add_task',
+    type: 'ADD_TASK',
     payload: task
 })
 
 export const deleteTaskAction = (id) => ({
-    type: 'delete_task',
+    type: 'DELETE_TASK',
     payload: id
 })
