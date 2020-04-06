@@ -18,7 +18,7 @@ const TaskForm = () => {
         }))        
         setTask('')
     }, [setTask, task, dispatch])
-    
+
     return(
         <div>
             <form onSubmit={handleSubmit}>
