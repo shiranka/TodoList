@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteTaskAction} from '../redux'
+import { deleteTaskAction} from '../redux/actions/task_action'
 
 
 const TasksList = () => {
@@ -14,7 +14,7 @@ const TasksList = () => {
     const tasksList = (tasks.length) ? (
         tasks.map(task => {
             return (
-                <div className="collection-item" key={task.id}>
+                <div key={task.id}>
                 <span>{task.content}</span>
                 <button onClick={deleteTask(task.id)}>x</button>
                 </div>

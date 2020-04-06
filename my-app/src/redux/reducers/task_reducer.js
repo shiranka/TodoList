@@ -1,18 +1,4 @@
-import { createStore } from 'redux'
-
-const initialState = {
-    tasks: [
-        {id: 1, content: 'buy some milk'},
-        {id: 2, content: 'play with my dogs'}
-    ]
-}
-
-export const store = createStore(
-    reducer,
-    initialState
-)
-
-function reducer(state, {type, payload}){
+export function reducer(state, {type, payload}){
     switch(type){
         case 'ADD_TASK':
             return {
@@ -32,13 +18,3 @@ function reducer(state, {type, payload}){
             return state
     }
 }
-
-export const addTaskAction = (task) => ({
-    type: 'ADD_TASK',
-    payload: task
-})
-
-export const deleteTaskAction = (id) => ({
-    type: 'DELETE_TASK',
-    payload: id
-})

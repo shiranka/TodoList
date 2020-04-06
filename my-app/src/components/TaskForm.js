@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { addTaskAction } from '../redux'
+import { addTaskAction } from '../redux/actions/task_action'
 
 const TaskForm = () => {
     const [task, setTask] = useState('')
     const dispatch = useDispatch()
    
-    const handleChange = useCallback((e) => {
-        setTask(e.target.value)
+    const handleChange = useCallback((input) => {
+        setTask(input)
     }, [setTask])
     
     const handleSubmit = useCallback((e) => {
@@ -25,7 +25,7 @@ const TaskForm = () => {
                 <label>Add new task:</label>
                 <input
                     type="text"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e.target.value)}
                     placeholder='Add a task...'
                     value={task}
                 />
