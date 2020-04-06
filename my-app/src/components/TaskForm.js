@@ -6,8 +6,8 @@ const TaskForm = () => {
     const [task, setTask] = useState('')
     const dispatch = useDispatch()
    
-    const handleChange = useCallback((input) => {
-        setTask(input)
+    const handleChange = useCallback((task_content) => {
+        setTask(task_content)
     }, [setTask])
     
     const handleSubmit = useCallback((e) => {
