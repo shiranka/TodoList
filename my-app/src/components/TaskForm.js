@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { addTaskAction } from '../redux/actions/task_action'
+import TextField from '@material-ui/core/TextField'
 
 const TaskForm = () => {
     const [task, setTask] = useState('')
@@ -21,14 +22,14 @@ const TaskForm = () => {
 
     return(
         <div>
-            <form onSubmit={handleSubmit}>
-                <label>Add new task:</label>
-                <input
+            <form onSubmit={handleSubmit}>            
+                <TextField 
                     type="text"
                     onChange={(e) => handleChange(e.target.value)}
                     placeholder='Add a task...'
                     value={task}
-                />
+                    label="New task"
+                />                
             </form>
         </div>
     )    

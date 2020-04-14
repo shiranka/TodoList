@@ -1,25 +1,26 @@
-import React, { useCallback } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { deleteTaskAction} from '../redux/actions/task_action'
-
+import React from 'react'
+import Task from './Task'
+import { useSelector } from 'react-redux'
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText";
 
 const TasksList = () => {
     const tasks = useSelector((state) => state.tasks)
-    const dispatch = useDispatch()
-    
-    const deleteTask = useCallback((id) => () => {
-        dispatch(deleteTaskAction(id))
-    }, [dispatch])
     
     const tasksList = (tasks.length) ? (
         tasks.map(task => {
             return (
-                <div key={task.id}>
-                <span>{task.content}</span>
-                <button onClick={deleteTask(task.id)}>x</button>
+                <div key={task.id}>     
+                    <Task task={task}/>  
                 </div>
-            )
-        })) : ( <p>You have no tasks left, yay!</p> )
+        )})) : ( 
+            <List> 
+                <ListItem divider="true">
+                    <ListItemText primary="You have no tasks left, yay!" />
+                </ListItem>               
+            </List>
+        )
     
     return (
         <div> 
