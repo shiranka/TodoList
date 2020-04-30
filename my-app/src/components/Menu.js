@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function PersistentDrawerLeft() {
-  const classes = useStyles();
+  const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const dispatch = useDispatch()      
   const deleteCheckedTasks = useCallback (() => dispatch(deleteCheckedTasksAction()), [dispatch])
