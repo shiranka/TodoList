@@ -1,35 +1,56 @@
-import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
+import AddIcon from '@material-ui/icons/Add'
+import InputBase from '@material-ui/core/InputBase'
+import React, { useState, useCallback } from 'react'
+import IconButton from "@material-ui/core/IconButton"
 import { addTaskAction } from '../redux/actions/task_action'
-import TextField from '@material-ui/core/TextField'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 const TaskForm = () => {
     const [task, setTask] = useState('')
     const dispatch = useDispatch()
    
-    const handleChange = useCallback((task_content) => {
+    const wirteTask = useCallback((task_content) => {
         setTask(task_content)
     }, [setTask])
     
-    const handleSubmit = useCallback((e) => {
+    const addTask = useCallback(e => {
         e.preventDefault()
-        dispatch(addTaskAction({
-            id: Math.random(),
-            content: task
-        }))        
-        setTask('')
+        if(task){
+            dispatch(addTaskAction({
+                id: Math.random(),
+                content: task
+            }))        
+        setTask('')}
     }, [setTask, task, dispatch])
 
     return(
         <div>
-            <form onSubmit={handleSubmit}>            
-                <TextField 
-                    type="text"
-                    onChange={(e) => handleChange(e.target.value)}
-                    placeholder='Add a task...'
-                    value={task}
-                    label="New task"
-                />                
+            <form onSubmit={addTask}>
+            <IconButton onClick={addTask} >
+                <AddIcon />
+            </IconButton >
+            <FormControlLabel                        
+                control={
+                    <InputBase
+                        value={task}
+                        onChange={(e) => wirteTask(e.target.value)}
+                        placeholder="A New Task..."
+                    />
+                }        
+            />                 
+                {
+                /*<div >
+                    <InputBase
+                        value={task}
+                        onChange={(e) => wirteTask(e.target.value)}
+                        placeholder="A New Task..."
+                        // className={classes.inputInput}
+                    />
+                    <IconButton onClick={addTask} >
+                        <AddIcon />
+                    </IconButton >
+                </div>*/}
             </form>
         </div>
     )    

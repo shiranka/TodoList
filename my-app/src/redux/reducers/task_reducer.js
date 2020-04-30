@@ -1,9 +1,10 @@
 import { createStore } from 'redux'
 
 const initialState = {
+    isHideTasks: false,
     tasks: [
-        {id: 1, content: 'buy some milk'},
-        {id: 2, content: 'play with my dogs'}
+        {id: 1, content: 'buy some milk', status: true},
+        {id: 2, content: 'play with my dogs', status: false}
     ]
 }
 
@@ -14,16 +15,39 @@ export const store = createStore(
 
 function reducer(state, {type, payload}){
     switch(type){
-        case 'ADD_TASK':
+        case 'DELETE_CHECKED_TASKS':{
+            let tasks = state.tasks.filter(task => (task.status !== true))
+            return {
+                ...state,
+                tasks
+            }
+        }
+        case 'IS_HIDE_TASKS':{
+            return {
+                ...state,
+                isHideTasks: !state.isHideTasks
+            }
+        }
+        case 'ADD_TASK':{
             return {
                 ...state,
                 tasks: [...state.tasks, payload]  
             }
+        }
         case 'DELETE_TASK':{ 
             let tasks = [...state.tasks]
             const taskPos = tasks.map((task) => {return task.id}).indexOf(payload)
             tasks.splice(taskPos, 1)  
             return {               
+                ...state,                            
+                tasks
+            }
+        }
+        case 'CHANGE_STATUS':{
+            let tasks = [...state.tasks]
+            const taskPos = tasks.map((task) => {return task.id}).indexOf(payload)
+            tasks[taskPos].status = !(tasks[taskPos].status)
+            return {
                 ...state,                            
                 tasks
             }

@@ -1,17 +1,15 @@
 import React from 'react'
-import NavBar from './components/NavBar'
-import TasksList from './components/TasksList'
-import TaskForm from './components/TaskForm'
 import { Provider } from 'react-redux'
+import TasksList from './components/TasksList'
 import { store } from './redux/reducers/task_reducer'
+import Menu from './components/Menu'
 
 function App() {
   return (
     <Provider store={store}>     
       <div>
-        <NavBar />
-        <TasksList />
-        <TaskForm />
+        <Menu />
+        <TasksList />        
       </div>
     </Provider>
   )
