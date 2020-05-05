@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import AddIcon from '@material-ui/icons/Add'
 import InputBase from '@material-ui/core/InputBase'
@@ -8,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 const TaskForm = () => {
     const [task, setTask] = useState('')
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
    
     const wirteTask = useCallback((task_content) => {
         setTask(task_content)
@@ -19,6 +20,7 @@ const TaskForm = () => {
         if(task){
             dispatch(addTaskAction({
                 id: Math.random(),
+                date: moment().format("MMM Do YY"),
                 content: task
             }))        
         setTask('')}
@@ -27,30 +29,18 @@ const TaskForm = () => {
     return(
         <div>
             <form onSubmit={addTask}>
-            <IconButton onClick={addTask} >
-                <AddIcon />
-            </IconButton >
-            <FormControlLabel                        
-                control={
-                    <InputBase
-                        value={task}
-                        onChange={(e) => wirteTask(e.target.value)}
-                        placeholder="A New Task..."
-                    />
-                }        
-            />                 
-                {
-                /*<div >
-                    <InputBase
-                        value={task}
-                        onChange={(e) => wirteTask(e.target.value)}
-                        placeholder="A New Task..."
-                        // className={classes.inputInput}
-                    />
-                    <IconButton onClick={addTask} >
-                        <AddIcon />
-                    </IconButton >
-                </div>*/}
+                <IconButton onClick={addTask} >
+                    <AddIcon />
+                </IconButton >~
+                <FormControlLabel                        
+                    control={
+                        <InputBase
+                            value={task}
+                            onChange={(e) => wirteTask(e.target.value)}
+                            placeholder="New Task..."
+                        />
+                    }        
+                />              
             </form>
         </div>
     )    

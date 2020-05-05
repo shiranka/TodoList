@@ -3,8 +3,8 @@ import { createStore } from 'redux'
 const initialState = {
     isHideTasks: false,
     tasks: [
-        {id: 1, content: 'buy some milk', status: true},
-        {id: 2, content: 'play with my dogs', status: false}
+        {id: 1, content: 'buy some milk', date:"April 6th 20", status: true},
+        {id: 2, content: 'play with my dogs', date:"June 5th 20", status: false}
     ]
 }
 
