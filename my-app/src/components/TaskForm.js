@@ -31,7 +31,7 @@ const TaskForm = () => {
             <form onSubmit={addTask}>
                 <IconButton onClick={addTask} >
                     <AddIcon />
-                </IconButton >~
+                </IconButton >
                 <FormControlLabel                        
                     control={
                         <InputBase

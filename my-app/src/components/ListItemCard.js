@@ -62,14 +62,16 @@ export default function ListItemCard() {
                 title="Your Tasks For Today:"
             />
             <TasksList /> 
-            <CardActions disableSpacing style={{marginLeft:"auto",marginTop:"auto",position:"absulote"}} >
-                <Card style={ isFormOpen ? { width: 400, visibility: "visible"} : { visibility: "hidden"} }>
-                    <TaskForm />
-                </Card>
-                <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" style={{marginLeft:"auto",marginBottom:"auto"}}>
-                    { isFormOpen ? <RemoveIcon /> : <AddIcon /> } 
-                </Fab>  
-            </CardActions>
+            <div>        
+                <CardActions disableSpacing style={{marginLeft:"auto",marginTop:"auto",position:"absulote"}} >
+                    <Card style={ isFormOpen ? { width: 400, visibility: "visible"} : { visibility: "hidden"} }>
+                        <TaskForm />
+                    </Card>
+                    <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" style={{marginLeft:"auto",marginBottom:"auto"}}>
+                        { isFormOpen ? <RemoveIcon /> : <AddIcon /> } 
+                    </Fab>  
+                </CardActions>
+            </div>
         </Card>
     )
 }
