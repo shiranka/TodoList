@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import React, { useCallback } from 'react'
-import Paper from '@material-ui/core/Paper'
+import ListItem from "@material-ui/core/ListItem"
 import Checkbox from '@material-ui/core/Checkbox'
 import DeleteIcon from "@material-ui/icons/Delete"
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,19 +8,18 @@ import IconButton from "@material-ui/core/IconButton"
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { deleteTaskAction, changeStatusAction } from '../redux/actions/task_action'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex', 
-    alignItems:"center",
-    justifyContent: "center",    
-    flexWrap: 'wrap',
     width: 400,
     margin:"auto" ,
-    marginTop: 10,
-    borderRadius: 10,
-    padding: 25
-  },
-})
+    marginBottom: 5,
+    '&:hover': {
+        '& $child2': {
+            display:"none"
+            // color: 'secondary'
+        }}
+    },
+}))
 
 const Task = ({ task }) => {
     const classes = useStyles()  
@@ -36,19 +35,21 @@ const Task = ({ task }) => {
 
     const taskVeiw = (
         <div style={{display:"flex" }}>
-      <Paper  className={classes.root}><FormControlLabel style={task.status ? ({ textDecoration: 'line-through'}) : {}}                      
-                    control={                
-                        <Checkbox
-                            checked={task.status}
-                            onChange={changeStatus(task.id)}
-                            color="primary"
-                        />      
-                    }
-                    label={task.content}
-                />  
-                <IconButton onClick={deleteTask(task.id)} >
-                    <DeleteIcon />
-                </IconButton ></Paper>
+        <ListItem divider="true" className={classes.root}>
+            <FormControlLabel style={task.status ? ({ textDecoration: 'line-through'}) : {}}                      
+                control={                
+                    <Checkbox
+                        checked={task.status}
+                        onChange={changeStatus(task.id)}
+                        color="primary"
+                    />      
+                }
+                label={task.content}
+            />  
+            <IconButton onClick={deleteTask(task.id)}  >
+                <DeleteIcon />
+            </IconButton >
+        </ListItem>
     </div>
         // <List >
         //     <ListItem divider="true" >

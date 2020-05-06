@@ -14,7 +14,7 @@ const TasksList = () => {
             if (!(isHideTasks && task.status)) {                 
                 return (
                     <div key={task.id}>     
-                        <Task task={task}/>  
+                        <Task task={task}/>
                     </div>
             )}})) : ( 
             <List > 
@@ -26,7 +26,9 @@ const TasksList = () => {
     
     return (
         <div> 
-            { tasksList }
+            <List> 
+                { tasksList }
+            </List>
         </div>
     )
 }
