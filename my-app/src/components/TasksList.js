@@ -1,7 +1,6 @@
 import React from 'react'
 import Task from './Task'
 import { useSelector } from 'react-redux'
-import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 
@@ -16,20 +15,16 @@ const TasksList = () => {
                     <div key={task.id}>     
                         <Task task={task}/>
                     </div>
-            )}})) : ( 
-            <List > 
+                )}})) : ( 
                 <ListItem divider="true">
                     <ListItemText primary="You have no tasks left, yay!" />
-                </ListItem>               
-            </List>
+                </ListItem>                               
         )
     
-    return (
-        <div> 
-            <List> 
-                { tasksList }
-            </List>
-        </div>
+    return (        
+        <div  style={{overflow: "auto", minHeight:400, maxHeight:400}}>
+            { tasksList }
+        </div>        
     )
 }
 

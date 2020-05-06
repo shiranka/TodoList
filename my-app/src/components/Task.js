@@ -46,28 +46,11 @@ const Task = ({ task }) => {
                 }
                 label={task.content}
             />  
-            <IconButton onClick={deleteTask(task.id)}  >
+            <IconButton onClick={deleteTask(task.id)} >
                 <DeleteIcon />
             </IconButton >
         </ListItem>
     </div>
-        // <List >
-        //     <ListItem divider="true" >
-        //         <FormControlLabel style={task.status ? ({ textDecoration: 'line-through'}) : {}}                      
-        //             control={                
-        //                 <Checkbox
-        //                     checked={task.status}
-        //                     onChange={changeStatus(task.id)}
-        //                     color="primary"
-        //                 />      
-        //             }
-        //             label={task.content}
-        //         />  
-        //         <IconButton onClick={deleteTask(task.id)} >
-        //             <DeleteIcon />
-        //         </IconButton >
-        //     </ListItem>
-        // </List> 
     )
 
     return(
