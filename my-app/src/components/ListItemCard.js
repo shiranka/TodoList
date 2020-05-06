@@ -8,42 +8,51 @@ import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
 import RemoveIcon from '@material-ui/icons/Remove'
 import React, { useCallback, useState } from 'react'
-import { makeStyles } from "@material-ui/core/styles"
+import { withStyles } from '@material-ui/core/styles'
 import CardHeader from "@material-ui/core/CardHeader"
 import IconButton from "@material-ui/core/IconButton"
 import CardActions from '@material-ui/core/CardActions'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import { changeIsHideFlagAction, deleteCheckedTasksAction } from '../redux/actions/task_action'
 
-const useStyles = makeStyles({
+const styles = {
   root: {
-    display:"flex",
-    flexDirection:"column",
-    padding:20,
-    paddingTop:10,
-    minHeight:520,
-    maxHeight:520,
+    display: "flex",
+    flexDirection: "column",
+    padding: 20,
+    paddingTop: 10,
+    minHeight: 520,
+    maxHeight: 520,
     borderRadius: 6,
     margin: "auto",
     marginTop: 20,
     maxWidth: 480
+  },
+  endOfCard: {
+    marginLeft: "auto",
+    marginTop: "auto",
+    position: "absulote"
+  },
+  fab: {
+    marginLeft: "auto",
+    marginBottom: "auto"
   }
-})
+}
 
-export default function ListItemCard() {
-    const classes = useStyles()
+function ListItemCard(props) {
     const dispatch = useDispatch() 
     const [filtered, setFilter] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(false)
 
+    const changeFormState = useCallback(() => setIsFormOpen(!isFormOpen),[setIsFormOpen,isFormOpen])
     const deleteCheckedTasks = useCallback (() => dispatch(deleteCheckedTasksAction()), [dispatch])
     const filterList = useCallback(() => {
         dispatch(changeIsHideFlagAction())
         setFilter(!filtered)
     }, [dispatch,setFilter,filtered])
-    const changeFormState = useCallback(() => setIsFormOpen(!isFormOpen),[setIsFormOpen,isFormOpen])
+    
     return (
-        <Card className={classes.root} >
+        <Card className={props.classes.root} >
             <CardHeader
                 action={
                 <div>
@@ -63,11 +72,11 @@ export default function ListItemCard() {
             />
             <TasksList /> 
             <div>        
-                <CardActions disableSpacing style={{marginLeft:"auto",marginTop:"auto",position:"absulote"}} >
+                <CardActions disableSpacing className={props.classes.endOfCard} >
                     <Card style={ isFormOpen ? { width: 400, visibility: "visible"} : { visibility: "hidden"} }>
                         <TaskForm />
                     </Card>
-                    <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" style={{marginLeft:"auto",marginBottom:"auto"}}>
+                    <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" className={props.classes.fab}>
                         { isFormOpen ? <RemoveIcon /> : <AddIcon /> } 
                     </Fab>  
                 </CardActions>
@@ -75,3 +84,5 @@ export default function ListItemCard() {
         </Card>
     )
 }
+
+export default withStyles(styles)(ListItemCard)

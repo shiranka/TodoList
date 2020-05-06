@@ -2,9 +2,18 @@ import React from 'react'
 import Task from './Task'
 import { useSelector } from 'react-redux'
 import ListItem from "@material-ui/core/ListItem"
+import { withStyles } from '@material-ui/core/styles'
 import ListItemText from "@material-ui/core/ListItemText"
 
-const TasksList = () => {
+const styles = {
+    root: {
+        overflow: "auto",
+        minHeight: 400, 
+        maxHeight: 400
+    }
+}
+
+const TasksList = (props) => {
     const tasks = useSelector((state) => state.tasks)
     const isHideTasks = useSelector((state) => state.isHideTasks)
     
@@ -22,10 +31,10 @@ const TasksList = () => {
         )
     
     return (        
-        <div  style={{overflow: "auto", minHeight:400, maxHeight:400}}>
+        <div className={props.classes.root}>
             { tasksList }
         </div>        
     )
 }
 
-export default TasksList
+export default withStyles(styles)(TasksList)
