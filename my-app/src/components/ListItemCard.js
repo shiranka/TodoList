@@ -1,7 +1,7 @@
 import TaskForm from './TaskForm'
 import TasksList from './TasksList'
 import Fab from '@material-ui/core/Fab'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Card from "@material-ui/core/Card"
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -40,12 +40,18 @@ const styles = {
 }
 
 function ListItemCard(props) {
+    const tasks = useSelector((state) => state.tasks)
     const dispatch = useDispatch() 
     const [filtered, setFilter] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(false)
+    const checkedTasks = tasks.filter(task => (task.status === true))
 
     const changeFormState = useCallback(() => setIsFormOpen(!isFormOpen),[setIsFormOpen,isFormOpen])
-    const deleteCheckedTasks = useCallback (() => dispatch(deleteCheckedTasksAction()), [dispatch])
+    const deleteCheckedTasks = useCallback (() => {
+        const ids = checkedTasks.map(task => task._id)
+        const idsString = ids.join(",")
+        dispatch(deleteCheckedTasksAction(idsString))
+    }, [dispatch, checkedTasks])
     const filterList = useCallback(() => {
         dispatch(changeIsHideFlagAction())
         setFilter(!filtered)

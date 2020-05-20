@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import AddIcon from '@material-ui/icons/Add'
 import InputBase from '@material-ui/core/InputBase'
@@ -19,8 +18,6 @@ const TaskForm = () => {
         e.preventDefault()
         if(task){
             dispatch(addTaskAction({
-                id: Math.random(),
-                date: moment().format("MMM Do YY"),
                 content: task
             }))        
         setTask('')}
