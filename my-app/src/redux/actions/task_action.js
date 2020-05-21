@@ -37,7 +37,7 @@ export const deleteTaskAction = (id) =>{
 
 export const changeStatusAction = (taskToChange) => {
     return dispatch => {
-        return axios.put(`/api/tasks/update`, taskToChange)
+        return axios.patch(`/api/tasks/update`, taskToChange)
             .then(res => dispatch({
                 type: 'CHANGE_STATUS',
                 payload: taskToChange._id
@@ -46,9 +46,9 @@ export const changeStatusAction = (taskToChange) => {
     }
 }
 
-export const deleteCheckedTasksAction = (checkedTasksIds) => {
+export const deleteCheckedTasksAction = () => {
     return dispatch => {
-        return axios.get(`/api/tasks/deleteChecked/${checkedTasksIds}`)
+        return axios.get(`/api/tasks/deleteChecked`)
             .then(res => dispatch({
                 type: 'DELETE_CHECKED_TASKS'
             })    
