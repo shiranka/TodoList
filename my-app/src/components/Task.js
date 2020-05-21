@@ -1,3 +1,4 @@
+import moment from "moment"
 import { useDispatch } from 'react-redux'
 import React, { useCallback } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -27,13 +28,12 @@ const styles = {
 }
 
 const Task = (props) => {
-    // const classes = this.props
     const task = props.task
 
     const dispatch = useDispatch()
   
-    const changeStatus = useCallback((id) => () => {
-        dispatch(changeStatusAction(id))
+    const changeStatus = useCallback((taskToCheck) => () => {
+        dispatch(changeStatusAction(taskToCheck))
     }, [dispatch])
     
     const deleteTask = useCallback((id) => () => {
@@ -46,7 +46,7 @@ const Task = (props) => {
                 control={                
                     <Checkbox
                         checked={task.status}
-                        onChange={changeStatus(task.id)}
+                        onChange={changeStatus(task)}
                         color="primary"
                     />      
                 }
@@ -54,10 +54,10 @@ const Task = (props) => {
                     <Typography style={ task.status ? ({ textDecoration: 'line-through'}) : {}} >
                         {task.content}
                     </Typography>}
-                    secondary={task.date} />}
+                    secondary={moment(task.date).format("MMM Do YY")} />}
             />      
             <Tooltip title="Delete Task">
-                <IconButton onClick={deleteTask(task.id)} className={props.classes.clearIndicator}>
+                <IconButton onClick={deleteTask(task._id)} className={props.classes.clearIndicator}>
                     <DeleteIcon />
                 </IconButton >   
             </Tooltip>
