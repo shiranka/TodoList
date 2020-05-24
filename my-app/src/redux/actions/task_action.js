@@ -1,21 +1,60 @@
-export const addTaskAction = (task) => ({
-    type: 'ADD_TASK',
-    payload: task
-})
+import axios from 'axios'
 
-export const deleteTaskAction = (id) => ({
-    type: 'DELETE_TASK',
-    payload: id
-})
+export const getTasksAction = () => {
+    return dispatch => {
+        return axios.get('/api/tasks')
+            .then(res => dispatch({
+                type: 'GET_TASKS',
+                payload: res.data
+            })            
+        ).catch(err => (console.log(err)))
+        
+    }
+}
 
-export const changeStatusAction = (id) => ({
-    type: 'CHANGE_STATUS',
-    payload: id
-})
+export const addTaskAction = (task) => {
+    return dispatch => {
+        return axios.post('/api/tasks', task)
+            .then(res => dispatch({
+                type: 'ADD_TASK',
+                payload: res.data
+            })        
+        )
+    }
+}
 
-export const deleteCheckedTasksAction = () => ({
-    type: 'DELETE_CHECKED_TASKS'
-})
+export const deleteTaskAction = (id) =>{
+    return dispatch => {
+        return axios.delete(`/api/tasks/${id}`)
+            .then(res => dispatch({
+                type: 'DELETE_TASK',
+                payload: id
+            })     
+        )
+    }
+}
+
+
+export const changeStatusAction = (taskToChange) => {
+    return dispatch => {
+        return axios.patch(`/api/tasks/update`, taskToChange)
+            .then(res => dispatch({
+                type: 'CHANGE_STATUS',
+                payload: taskToChange._id
+            })
+        )
+    }
+}
+
+export const deleteCheckedTasksAction = () => {
+    return dispatch => {
+        return axios.get(`/api/tasks/deleteChecked`)
+            .then(res => dispatch({
+                type: 'DELETE_CHECKED_TASKS'
+            })    
+        )
+    }
+} 
 
 export const changeIsHideFlagAction = () =>({
     type: 'IS_HIDE_TASKS'
