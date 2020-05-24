@@ -43,7 +43,7 @@ function ListItemCard(props) {
     const dispatch = useDispatch() 
     const [filtered, setFilter] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(false)
-
+    
     const changeFormState = useCallback(() => setIsFormOpen(!isFormOpen),[setIsFormOpen,isFormOpen])
     const deleteCheckedTasks = useCallback (() => dispatch(deleteCheckedTasksAction()), [dispatch])
     const filterList = useCallback(() => {
