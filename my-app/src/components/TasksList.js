@@ -9,8 +9,8 @@ import { getTasksAction } from '../redux/actions/task_action'
 const styles = {
     root: {
         overflow: "auto",
-        minHeight: 400, 
-        maxHeight: 400
+        minHeight: 450, 
+        maxHeight: 450
     }
 }
 

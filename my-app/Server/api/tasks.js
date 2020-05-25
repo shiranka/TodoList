@@ -16,6 +16,8 @@ router.post('/', (req, res) => {
     try {
         const newTask = new Task({
         content: req.body.content,
+        x: req.body.x,
+        y: req.body.y,
         status: false
         })    
         newTask.save()

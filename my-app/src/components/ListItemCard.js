@@ -21,23 +21,20 @@ const styles = {
     flexDirection: "column",
     padding: 20,
     paddingTop: 10,
-    minHeight: 520,
-    maxHeight: 520,
+    minHeight: 580,
+    maxHeight: 580,
     borderRadius: 6,
-    margin: "auto",
+    marginLeft: 20,
     marginTop: 20,
     maxWidth: 480
   },
   endOfCard: {
-    marginLeft: "auto",
-    marginTop: "auto",
-    position: "absulote"
+    marginLeft: "auto"
   },
   fab: {
-    marginLeft: "auto",
-    marginBottom: "auto"
-  }
-}
+    marginLeft: "auto"
+  },
+ }
 
 function ListItemCard(props) {
     const dispatch = useDispatch() 
