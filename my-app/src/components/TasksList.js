@@ -22,7 +22,7 @@ const TasksList = (props) => {
     }, [dispatch])
     
     const tasks = useSelector((state) => state.tasks)
-    const isHideTasks = useSelector((state) => state.isHideTasks)
+    const isHideTasks = useSelector((state) => state.isHideTasksList)
     
     const tasksList = tasks.length ? (
         tasks.map(task => {

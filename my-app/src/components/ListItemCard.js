@@ -13,7 +13,7 @@ import CardHeader from "@material-ui/core/CardHeader"
 import IconButton from "@material-ui/core/IconButton"
 import CardActions from '@material-ui/core/CardActions'
 import FilterListIcon from '@material-ui/icons/FilterList'
-import { changeIsHideFlagAction, deleteCheckedTasksAction } from '../redux/actions/task_action'
+import { changeIsHideListFlagAction, deleteCheckedTasksAction } from '../redux/actions/task_action'
 
 const styles = {
   root: {
@@ -44,7 +44,7 @@ function ListItemCard(props) {
     const changeFormState = useCallback(() => setIsFormOpen(!isFormOpen),[setIsFormOpen,isFormOpen])
     const deleteCheckedTasks = useCallback (() => dispatch(deleteCheckedTasksAction()), [dispatch])
     const filterList = useCallback(() => {
-        dispatch(changeIsHideFlagAction())
+        dispatch(changeIsHideListFlagAction())
         setFilter(!filtered)
     }, [dispatch,setFilter,filtered])
     
