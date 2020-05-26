@@ -37,8 +37,7 @@ const TaskForm = (props) => {
             } else {
                 dispatch(addTaskAction({
                     content: task.content,
-                    x: task.x,
-                    y: task.y
+                    coordinates: [task.x, task.y]
                 }))        
                 setTask({
                     content: '',

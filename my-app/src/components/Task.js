@@ -29,7 +29,7 @@ const styles = {
 
 const Task = (props) => {
     const task = props.task
-    const dateAndPoint= ` ${moment(task.date).format("MMM Do YY")} at [${task.x},${task.y}]`
+    const dateAndPoint= ` ${moment(task.date).format("MMM Do YY")} at [${task.coordinates}]`
     const dispatch = useDispatch()
     
     const changeStatus = useCallback((taskToCheck) => () => {

@@ -6,12 +6,8 @@ const TaskSchema = new Schema ({
         type: String,
         required: true
     },
-    x: {
-        type: Number,
-        required: true
-    },
-    y: {
-        type: Number,
+    coordinates: {
+        type: Array,
         required: true
     },
     status:{
