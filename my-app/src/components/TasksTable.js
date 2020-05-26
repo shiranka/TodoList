@@ -9,22 +9,21 @@ import { withStyles } from '@material-ui/core/styles'
 import IconButton from "@material-ui/core/IconButton"
 import FilterListIcon from '@material-ui/icons/FilterList'
 import { changeIsHideTableFlagAction } from '../redux/actions/task_action'
-import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-material-ui' 
+import { SortingState, IntegratedSorting } from '@devexpress/dx-react-grid'
+import { Grid, VirtualTable, TableHeaderRow } from '@devexpress/dx-react-grid-material-ui' 
 
 const styles = {
     root: {
-        overflow: "auto",
-        minHeight: 320, 
-        maxHeight: 320,
+        height: 350,
         width: 765,
         borderRadius: 6,
         marginLeft: 20,
         marginTop: 20,
-        padding: 20,
-    }, toolbar: {
-        padding: 0,
-        marginTop: 0,
-        paddingLeft: 10,
+        paddingRight: 20,
+        paddingLeft: 20,
+    }, filterIcon: {
+        paddingTop: 30,
+        paddingLeft: 0,
     }
 }
 
@@ -62,17 +61,20 @@ const TasksTable = (props) => {
     const filterdRows = rows.filter( t => {return t !== null })
 
     return (       
-        <Paper className={props.classes.root}>
-            <Grid rows={filterdRows} columns={columns}  >
-                <Table />
-                <TableHeaderRow />
-                <Toolbar className={props.classes.toolbar}>
+        <Paper className={props.classes.root}
+        >
+            <Grid rows={filterdRows} columns={columns} >
+                <SortingState />
+                <IntegratedSorting />
+                <VirtualTable height='250px'/>
+                <TableHeaderRow showSortingControls/>  
+                <Toolbar >
                     <Tooltip title="Hide The Tasks You Are Done With">
-                        <IconButton color={filtered ? "secondary" : 'default'}>
+                        <IconButton className={props.classes.filterIcon} color={filtered ? "secondary" : 'default'}>
                             <FilterListIcon onClick={filterTable} /> 
                         </IconButton>
                     </Tooltip>  
-                </Toolbar>              
+                </Toolbar>       
             </Grid>
         </Paper>   
     )
