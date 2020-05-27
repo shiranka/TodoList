@@ -56,6 +56,10 @@ export const deleteCheckedTasksAction = () => {
     }
 } 
 
-export const changeIsHideFlagAction = () =>({
-    type: 'IS_HIDE_TASKS'
+export const changeIsHideListFlagAction = () =>({
+    type: 'IS_HIDE_TASKS_LIST'
+})
+
+export const changeIsHideTableFlagAction = () =>({
+    type: 'IS_HIDE_TASKS_TABLE'
 })

@@ -27,11 +27,10 @@ const styles = {
   }
 }
 
-const Task = (props) => {
-    const task = props.task
-
+const Task = ({ classes, task}) => {
+    const dateAndPoint= ` ${moment(task.date).format("MMM Do YY")} at [${task.coordinates}]`
     const dispatch = useDispatch()
-  
+    
     const changeStatus = useCallback((taskToCheck) => () => {
         dispatch(changeStatusAction(taskToCheck))
     }, [dispatch])
@@ -41,7 +40,7 @@ const Task = (props) => {
     }, [dispatch])
 
     const taskVeiw = (
-        <ListItem divider="true" className={props.classes.root} secondary={task.date} >   
+        <ListItem divider="true" className={classes.root} secondary={task.date} >   
             <FormControlLabel                       
                 control={                
                     <Checkbox
@@ -54,10 +53,10 @@ const Task = (props) => {
                     <Typography style={ task.status ? ({ textDecoration: 'line-through'}) : {}} >
                         {task.content}
                     </Typography>}
-                    secondary={moment(task.date).format("MMM Do YY")} />}
+                    secondary= {dateAndPoint}/>}
             />      
             <Tooltip title="Delete Task">
-                <IconButton onClick={deleteTask(task._id)} className={props.classes.clearIndicator}>
+                <IconButton onClick={deleteTask(task._id)} className={classes.clearIndicator}>
                     <DeleteIcon />
                 </IconButton >   
             </Tooltip>

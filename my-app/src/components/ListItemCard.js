@@ -13,7 +13,7 @@ import CardHeader from "@material-ui/core/CardHeader"
 import IconButton from "@material-ui/core/IconButton"
 import CardActions from '@material-ui/core/CardActions'
 import FilterListIcon from '@material-ui/icons/FilterList'
-import { changeIsHideFlagAction, deleteCheckedTasksAction } from '../redux/actions/task_action'
+import { changeIsHideListFlagAction, deleteCheckedTasksAction } from '../redux/actions/task_action'
 
 const styles = {
   root: {
@@ -21,25 +21,25 @@ const styles = {
     flexDirection: "column",
     padding: 20,
     paddingTop: 10,
-    minHeight: 520,
-    maxHeight: 520,
+    minHeight: 580,
+    maxHeight: 580,
     borderRadius: 6,
-    margin: "auto",
+    marginLeft: 20,
     marginTop: 20,
     maxWidth: 480
   },
   endOfCard: {
-    marginLeft: "auto",
-    marginTop: "auto",
-    position: "absulote"
+    marginLeft: "auto"
   },
   fab: {
-    marginLeft: "auto",
-    marginBottom: "auto"
+    marginLeft: "auto"
+  },
+  form: {
+    width: 400
   }
-}
+ }
 
-function ListItemCard(props) {
+function ListItemCard({ classes }) {
     const dispatch = useDispatch() 
     const [filtered, setFilter] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -47,12 +47,12 @@ function ListItemCard(props) {
     const changeFormState = useCallback(() => setIsFormOpen(!isFormOpen),[setIsFormOpen,isFormOpen])
     const deleteCheckedTasks = useCallback (() => dispatch(deleteCheckedTasksAction()), [dispatch])
     const filterList = useCallback(() => {
-        dispatch(changeIsHideFlagAction())
+        dispatch(changeIsHideListFlagAction())
         setFilter(!filtered)
     }, [dispatch,setFilter,filtered])
     
     return (
-        <Card className={props.classes.root} >
+        <Card className={classes.root} >
             <CardHeader
                 action={
                 <div>
@@ -72,11 +72,12 @@ function ListItemCard(props) {
             />
             <TasksList /> 
             <div>        
-                <CardActions disableSpacing className={props.classes.endOfCard} >
-                    <Card style={ isFormOpen ? { width: 400, visibility: "visible"} : { visibility: "hidden"} }>
+                <CardActions disableSpacing className={classes.endOfCard} >
+                    <Card style={ isFormOpen ? { visibility: "visible"} : { visibility: "hidden"} }
+                        className={classes.form}>
                         <TaskForm />
                     </Card>
-                    <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" className={props.classes.fab}>
+                    <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" className={classes.fab}>
                         { isFormOpen ? <RemoveIcon /> : <AddIcon /> } 
                     </Fab>  
                 </CardActions>
