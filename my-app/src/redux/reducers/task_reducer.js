@@ -2,7 +2,8 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
 const initialState = {
-    isHideTasks: false,
+    isHideTasksList: false,
+    isHideTasksTable: false,
     tasks: []
 }
 
@@ -27,10 +28,16 @@ function reducer(state, {type, payload}) {
                 tasks
             }
         }
-        case 'IS_HIDE_TASKS': {
+        case 'IS_HIDE_TASKS_LIST': {
             return {
                 ...state,
-                isHideTasks: !state.isHideTasks
+                isHideTasksList: !state.isHideTasksList
+            }
+        }
+        case 'IS_HIDE_TASKS_TABLE': {
+            return {
+                ...state,
+                isHideTasksTable: !state.isHideTasksTable
             }
         }
         case 'ADD_TASK': {

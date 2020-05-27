@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
             .then(tasks => res.json(tasks))
             .catch(err => res.status(404))
     } catch (err) {
-        throw "can't get tasks from db"
+        throw Error("can't get tasks from db" + err.massage())
     }
 })
 
@@ -16,12 +16,13 @@ router.post('/', (req, res) => {
     try {
         const newTask = new Task({
         content: req.body.content,
+        coordinates: req.body.coordinates,
         status: false
         })    
         newTask.save()
             .then(Task => res.json(Task))
     } catch (err) {
-        throw "can't add task to db"
+        throw Error("can't add task to db" + err.massage())
     }
 })
 
@@ -32,7 +33,7 @@ router.patch('/update', (req, res) => {
         Task.update(id, newStatus)
         .then(Task => res.json(Task))
     } catch (err) {
-        throw "can't update task's status"
+        throw Error("can't update task's status" + err.massage())
     }
         
 })
@@ -42,7 +43,7 @@ router.delete('/:id',(req, res) => {
         Task.findById(req.params.id)
             .then(task => task.remove().then(() => res.json({success: true})))
     } catch (err) {
-        throw "can't delete task"
+        throw Error("can't delete task" + err.massage())
     }
 })
 
@@ -51,7 +52,7 @@ router.get('/deleteChecked', (req, res) => {
         Task.deleteMany({ status: true })
         .then(() => res.json({success: true}))
     } catch (err) {
-        throw "can't delete checked tasks"
+        throw Error("can't delete checked tasks" + err.massage())
     }
 })
 

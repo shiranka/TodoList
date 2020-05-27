@@ -6,6 +6,10 @@ const TaskSchema = new Schema ({
         type: String,
         required: true
     },
+    coordinates: {
+        type: Array,
+        required: true
+    },
     status:{
         type: Boolean
     },

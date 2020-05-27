@@ -9,12 +9,12 @@ import { getTasksAction } from '../redux/actions/task_action'
 const styles = {
     root: {
         overflow: "auto",
-        minHeight: 400, 
-        maxHeight: 400
+        minHeight: 450, 
+        maxHeight: 450
     }
 }
 
-const TasksList = (props) => {
+const TasksList = ({ classes }) => {
     const dispatch = useDispatch()
   
     useEffect(() => {
@@ -22,7 +22,7 @@ const TasksList = (props) => {
     }, [dispatch])
     
     const tasks = useSelector((state) => state.tasks)
-    const isHideTasks = useSelector((state) => state.isHideTasks)
+    const isHideTasks = useSelector((state) => state.isHideTasksList)
     
     const tasksList = tasks.length ? (
         tasks.map(task => {
@@ -40,7 +40,7 @@ const TasksList = (props) => {
         )
     
     return (        
-        <div className={props.classes.root}>
+        <div className={classes.root}>
             { tasksList }
         </div>        
     )
