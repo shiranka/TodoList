@@ -11,10 +11,19 @@ const styles = {
     root: {
       display: "flex",
       flexDirection: "row"
+    },
+    coordinates: {
+        width: 60
+    }, 
+    content: {
+        width: 200
+    },
+    coordinatePadding: {
+        paddingRight: 22
     }
 }
   
-const TaskForm = (props) => {
+const TaskForm = ({ classes }) => {
     const [task, setTask] = useState({
         content: '',
         x: '',
@@ -52,50 +61,45 @@ const TaskForm = (props) => {
 
     return(
         <div>
-            <form onSubmit={addTask} className={props.classes.root}>
+            <form onSubmit={addTask} className={classes.root}>
                 <IconButton onClick={addTask} >
                     <AddIcon />
                 </IconButton >
-                <div className={props.classes.root}>
-                    <FormControlLabel                        
+                <FormControlLabel                        
+                    control={
+                        <InputBase
+                            name="content"   
+                            value={task.content}
+                            onChange={wirteTask}
+                            placeholder="New Task..."
+                        />
+                    }     
+                />
+                <p className={classes.coordinatePadding}>[</p>
+                    <FormControlLabel 
                         control={
                             <InputBase
-                                name="content"    
-                                style={{width: 200}}
-                                value={task.content}
+                                className={classes.coordinates}
+                                value={task.x}
+                                name="x"
                                 onChange={wirteTask}
-                                placeholder="New Task..."
+                                placeholder="x"
                             />
-                        }     
-                        label= "["   
+                        }  
                     />
-                    <div className={props.classes.root}>
-                        <FormControlLabel                        
-                            label= ","
-                            control={
-                                <InputBase
-                                    style={{width: 60}}
-                                    value={task.x}
-                                    name="x"
-                                    onChange={wirteTask}
-                                    placeholder="x"
-                                />
-                            }  
-                        />
-                        <FormControlLabel 
-                            label= "]"           
-                            control={
-                                <InputBase
-                                    name="y"
-                                    style={{width: 60}}
-                                    value={task.y}
-                                    onChange={wirteTask}
-                                    placeholder="y"
-                                />
-                            }        
-                        />
-                    </div>
-                </div>
+                    <p className={classes.coordinatePadding}>,</p>
+                    <FormControlLabel 
+                        control={
+                            <InputBase
+                                name="y"
+                                className={classes.coordinates}
+                                value={task.y}
+                                onChange={wirteTask}
+                                placeholder="y"
+                            />
+                        }        
+                    />
+                    <p className={classes.coordinatePadding}>]</p>
             </form>
         </div>
     )    

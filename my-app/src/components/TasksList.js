@@ -14,7 +14,7 @@ const styles = {
     }
 }
 
-const TasksList = (props) => {
+const TasksList = ({ classes }) => {
     const dispatch = useDispatch()
   
     useEffect(() => {
@@ -40,7 +40,7 @@ const TasksList = (props) => {
         )
     
     return (        
-        <div className={props.classes.root}>
+        <div className={classes.root}>
             { tasksList }
         </div>        
     )

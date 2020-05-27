@@ -34,9 +34,12 @@ const styles = {
   fab: {
     marginLeft: "auto"
   },
+  form: {
+    width: 400
+  }
  }
 
-function ListItemCard(props) {
+function ListItemCard({ classes }) {
     const dispatch = useDispatch() 
     const [filtered, setFilter] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -49,7 +52,7 @@ function ListItemCard(props) {
     }, [dispatch,setFilter,filtered])
     
     return (
-        <Card className={props.classes.root} >
+        <Card className={classes.root} >
             <CardHeader
                 action={
                 <div>
@@ -69,11 +72,12 @@ function ListItemCard(props) {
             />
             <TasksList /> 
             <div>        
-                <CardActions disableSpacing className={props.classes.endOfCard} >
-                    <Card style={ isFormOpen ? { width: 400, visibility: "visible"} : { visibility: "hidden"} }>
+                <CardActions disableSpacing className={classes.endOfCard} >
+                    <Card style={ isFormOpen ? { visibility: "visible"} : { visibility: "hidden"} }
+                        className={classes.form}>
                         <TaskForm />
                     </Card>
-                    <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" className={props.classes.fab}>
+                    <Fab size="medium" color="secondary" onClick={changeFormState} aria-label="add" className={classes.fab}>
                         { isFormOpen ? <RemoveIcon /> : <AddIcon /> } 
                     </Fab>  
                 </CardActions>

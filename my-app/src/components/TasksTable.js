@@ -82,7 +82,7 @@ const TasksTable = ({ classes }) => {
                 <VirtualTable height='250px'/>
                 <TableHeaderRow showSortingControls/>  
                 <Toolbar >
-                    <Tooltip title="Hide The Tasks You Are Done With">
+                    <Tooltip title="Hide The Tasks You Are Done With"> 
                         <IconButton className={classes.filterIcon} color={filtered ? "secondary" : 'default'}>
                             <FilterListIcon onClick={filterTable} /> 
                         </IconButton>
