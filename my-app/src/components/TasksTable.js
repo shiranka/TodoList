@@ -13,7 +13,7 @@ import { Grid, VirtualTable, TableHeaderRow } from '@devexpress/dx-react-grid-ma
 
 const styles = {
     root: {
-        height: 350,
+        height: 300,
         width: 765,
         borderRadius: 6,
         marginLeft: 20,
@@ -79,7 +79,7 @@ const TasksTable = ({ classes }) => {
             <Grid rows={rows} columns={columns} >
                 <SortingState />
                 <IntegratedSorting columnExtensions={sortColumnPlugin}/>
-                <VirtualTable height='250px'/>
+                <VirtualTable height='225px'/>
                 <TableHeaderRow showSortingControls/>  
                 <Toolbar >
                     <Tooltip title="Hide The Tasks You Are Done With"> 
