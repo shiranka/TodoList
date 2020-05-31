@@ -21,7 +21,13 @@ const styles = {
 }
 
 const TasksLocations = ({ classes }) => {
-  
+  const dispatch = useDispatch() 
+  const tasks = useSelector((state) => state.tasks)
+  const isHideTasks = useSelector((state) => state.isHideTasksTable)
+
+  const taskToShow = isHideTasks ? tasks.filter( t => !t.status) : tasks
+  const tasksCoordinate = taskToShow.map(task => task.coordinates)
+
   useEffect(() => {
     new Map({
       controls: new defaultControls({ attribution: false }),
