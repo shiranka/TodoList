@@ -1,8 +1,8 @@
 import Task from './Task'
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import ListItem from "@material-ui/core/ListItem"
 import { withStyles } from '@material-ui/core/styles'
+import { useSelector, useDispatch } from 'react-redux'
 import ListItemText from "@material-ui/core/ListItemText"
 import { getTasksAction } from '../redux/actions/task_action'
 

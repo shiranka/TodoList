@@ -53,7 +53,7 @@ const TasksTable = ({ classes }) => {
             content: task.content,
             status: task.status ? "True": "False",
             date: moment(task.date).format("MMM Do YY"),
-            coordinates: `[${task.coordinates}]`
+            coordinates: `[${parseFloat(task.coordinates[0]).toFixed(3)},${parseFloat(task.coordinates[1]).toFixed(3)}]`
         })
     })
         

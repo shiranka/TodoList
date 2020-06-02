@@ -1,9 +1,9 @@
-import { useDispatch } from 'react-redux'
 import AddIcon from '@material-ui/icons/Add'
 import InputBase from '@material-ui/core/InputBase'
 import React, { useState, useCallback } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import IconButton from "@material-ui/core/IconButton"
+import { useSelector, useDispatch } from 'react-redux'
 import { addTaskAction } from '../redux/actions/task_action'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 
@@ -13,7 +13,7 @@ const styles = {
       flexDirection: "row"
     },
     coordinates: {
-        width: 60
+        width: 100
     }, 
     content: {
         width: 200
@@ -24,10 +24,9 @@ const styles = {
 }
   
 const TaskForm = ({ classes }) => {
+    const coordinates = useSelector((state)=> state.coordinates)
     const [task, setTask] = useState({
         content: '',
-        x: '',
-        y: ''
     })
     const dispatch = useDispatch();
    
@@ -40,22 +39,12 @@ const TaskForm = ({ classes }) => {
     
     const addTask = useCallback(e => {
         e.preventDefault()
-        if(task.content && task.x && task.y){
-            if(isNaN(task.x) || isNaN(task.y)){
-                alert("X and Y should be numbers")
-            } else {
-                dispatch(addTaskAction({
-                    content: task.content,
-                    coordinates: [task.x, task.y]
-                }))        
-                setTask({
-                    content: '',
-                    x: '',
-                    y: ''
-                })
-            }
-        } else {
-            alert("All fields are required")
+        if(task.content){
+            dispatch(addTaskAction({ 
+                content: task.content,
+                coordinates
+            }))        
+            setTask({ content: '' })
         }
     }, [setTask, task, dispatch])
 
@@ -75,31 +64,9 @@ const TaskForm = ({ classes }) => {
                         />
                     }     
                 />
-                <p className={classes.coordinatePadding}>[</p>
-                    <FormControlLabel 
-                        control={
-                            <InputBase
-                                className={classes.coordinates}
-                                value={task.x}
-                                name="x"
-                                onChange={wirteTask}
-                                placeholder="x"
-                            />
-                        }  
-                    />
-                    <p className={classes.coordinatePadding}>,</p>
-                    <FormControlLabel 
-                        control={
-                            <InputBase
-                                name="y"
-                                className={classes.coordinates}
-                                value={task.y}
-                                onChange={wirteTask}
-                                placeholder="y"
-                            />
-                        }        
-                    />
-                    <p className={classes.coordinatePadding}>]</p>
+                <p className={classes.coordinatePadding}>
+                    [ {parseFloat(coordinates[0]).toFixed(3)},{parseFloat(coordinates[1]).toFixed(3)} ]
+                </p>
             </form>
         </div>
     )    

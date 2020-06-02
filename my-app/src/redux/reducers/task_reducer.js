@@ -4,7 +4,8 @@ import thunk from 'redux-thunk'
 const initialState = {
     isHideTasksList: false,
     isHideTasksTable: false,
-    tasks: []
+    tasks: [],
+    coordinates: [0,0]
 }
 
 export const store = createStore(
@@ -19,6 +20,12 @@ function reducer(state, {type, payload}) {
             return{
                 ...state,
                 tasks: payload
+            }
+        }
+        case 'SET_COORDINATE': {
+            return{
+                ...state,
+                coordinates: payload
             }
         }
         case 'DELETE_CHECKED_TASKS': {

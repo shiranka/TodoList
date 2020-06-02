@@ -28,7 +28,8 @@ const styles = {
 }
 
 const Task = ({ classes, task}) => {
-    const dateAndPoint= ` ${moment(task.date).format("MMM Do YY")} at [${task.coordinates}]`
+    const dateAndPoint= `${moment(task.date).format("MMM Do YY")} at [${parseFloat(task.coordinates[0]).toFixed(3)},${parseFloat(task.coordinates[1]).toFixed(3)}]`
+    
     const dispatch = useDispatch()
     
     const changeStatus = useCallback((taskToCheck) => () => {
