@@ -46,7 +46,7 @@ const TaskForm = ({ classes }) => {
             }))        
             setTask({ content: '' })
         }
-    }, [setTask, task, dispatch])
+    }, [setTask, task, coordinates, dispatch])
 
     return(
         <div>
