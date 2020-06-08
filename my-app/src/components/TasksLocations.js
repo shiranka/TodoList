@@ -8,7 +8,7 @@ import { transform } from 'ol/proj'
 import { withStyles } from '@material-ui/core/styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { OSM, Vector as VectoreSource } from 'ol/source'
-import React, { useState, memo, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { setCoordinateAction } from '../redux/actions/task_action'
 import { Tile as TileLayer, Vector as VectoreLayer } from 'ol/layer'
 
@@ -34,24 +34,17 @@ const styles = {
   popup: {
     position: "absolute",
     backgroundColor: "white",
-    boxShadow: "0 1px 4px rgba(0,0,0,0,2)",
-    padding:5,
+    boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
+    padding: 20,
     borderRadius: 6,
     border: "1px solid #cccccc",
-    width:280
-  },
-  popupCloser: {
-    content: "X",
-    position: "absolute",
-    top: 2,
-    right: 8
+    margin: 8
   }
 }
 
 const TasksLocations = ({ classes }) => {
   const dispatch = useDispatch()
   const [map, setMap] = useState()
-  
   const tasks = useSelector(state => state.tasks)
   const isHideTasks = useSelector((state) => state.isHideTasksTable)
 
@@ -82,17 +75,18 @@ const TasksLocations = ({ classes }) => {
       }
     })
     myMap.addOverlay(overlay)
-    myMap.on('singleclick', click => {
+    myMap.on('pointermove', click => {
       const feature = myMap.forEachFeatureAtPixel(click.pixel, (feature, layer) => {return feature})
       if (feature) { 
         const coordinate = click.coordinate
-        debugger
-        content.innerHTML = '<p> you clicked here: </p>' + feature.values_.content
+        content.innerHTML = feature.values_.content
         overlay.setPosition(coordinate)
       } else {
         overlay.setPosition(undefined)
-        dispatch(setCoordinateAction(transform(click.coordinate, 'EPSG:3857', 'EPSG:4326')))
       }
+    })
+    myMap.on("singleclick", click => {
+      dispatch(setCoordinateAction(transform(click.coordinate, 'EPSG:3857', 'EPSG:4326')))
     })
     setMap(myMap)
   }, [])
@@ -107,4 +101,4 @@ const TasksLocations = ({ classes }) => {
   )
 }
 
-export default memo(withStyles(styles)(TasksLocations))
+export default withStyles(styles)(TasksLocations)
