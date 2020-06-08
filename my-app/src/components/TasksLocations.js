@@ -1,13 +1,14 @@
 import 'ol/ol.css'
 import Map from 'ol/Map'
 import View from 'ol/View'
+import Overlay from 'ol/Overlay'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
 import { transform } from 'ol/proj'
-import React, { useState, useMemo, memo, useEffect } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { OSM, Vector as VectoreSource } from 'ol/source'
+import React, { useState, memo, useEffect, useRef } from 'react'
 import { setCoordinateAction } from '../redux/actions/task_action'
 import { Tile as TileLayer, Vector as VectoreLayer } from 'ol/layer'
 
@@ -29,12 +30,28 @@ const styles = {
     borderRadius: 6,
     marginLeft: 20,
     marginTop: 10
+  },
+  popup: {
+    position: "absolute",
+    backgroundColor: "white",
+    boxShadow: "0 1px 4px rgba(0,0,0,0,2)",
+    padding:5,
+    borderRadius: 6,
+    border: "1px solid #cccccc",
+    width:280
+  },
+  popupCloser: {
+    content: "X",
+    position: "absolute",
+    top: 2,
+    right: 8
   }
 }
 
 const TasksLocations = ({ classes }) => {
   const dispatch = useDispatch()
   const [map, setMap] = useState()
+  
   const tasks = useSelector(state => state.tasks)
   const isHideTasks = useSelector((state) => state.isHideTasksTable)
 
@@ -42,7 +59,11 @@ const TasksLocations = ({ classes }) => {
     if (map) {
       map.getLayers().forEach(layer => { if(layer.get('name') === 'markersLayer') { map.removeLayer(layer) }})
       const tasksToShow = isHideTasks ? tasks.filter(t => !t.status) : tasks
-      const markers = tasksToShow.map(task => new Feature({ geometry: new Point(transform(task.coordinates, 'EPSG:4326', 'EPSG:3857'))}))
+      const markers = tasksToShow.map(task => 
+        new Feature({ 
+          content: task.content,
+          geometry: new Point(transform(task.coordinates, 'EPSG:4326', 'EPSG:3857'))
+      }))
       const markersSourceLayer = new VectoreSource({ features: markers })
       const markersLayer = new VectoreLayer({ name: "markersLayer", source: markersSourceLayer })
       map.addLayer(markersLayer)
@@ -51,13 +72,39 @@ const TasksLocations = ({ classes }) => {
 
   useEffect(() => {
     const myMap = createNewMap()
+    const container = document.getElementById('popup')
+    const content = document.getElementById('popup-content')
+    const overlay = new Overlay ({
+      element: container,
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 250
+      }
+    })
+    myMap.addOverlay(overlay)
     myMap.on('singleclick', click => {
-      dispatch(setCoordinateAction(transform(click.coordinate, 'EPSG:3857', 'EPSG:4326')))
+      const feature = myMap.forEachFeatureAtPixel(click.pixel, (feature, layer) => {return feature})
+      if (feature) { 
+        const coordinate = click.coordinate
+        debugger
+        content.innerHTML = '<p> you clicked here: </p>' + feature.values_.content
+        overlay.setPosition(coordinate)
+      } else {
+        overlay.setPosition(undefined)
+        dispatch(setCoordinateAction(transform(click.coordinate, 'EPSG:3857', 'EPSG:4326')))
+      }
     })
     setMap(myMap)
   }, [])
 
-  return <div className={classes.root} id="map" />
+  return (
+    <div>
+      <div className={classes.root} id="map" />      
+      <div id="popup" className={classes.popup}>
+        <div id="popup-content"/>
+      </div>
+    </div>
+  )
 }
 
 export default memo(withStyles(styles)(TasksLocations))
