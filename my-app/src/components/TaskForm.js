@@ -1,16 +1,16 @@
+import React, { useState } from 'react'
 import AddIcon from '@material-ui/icons/Add'
 import InputBase from '@material-ui/core/InputBase'
-import React, { useState, useCallback } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import IconButton from "@material-ui/core/IconButton"
+import IconButton from '@material-ui/core/IconButton'
 import { useSelector, useDispatch } from 'react-redux'
 import { addTaskAction } from '../redux/actions/task_action'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 const styles = {
     root: {
-      display: "flex",
-      flexDirection: "row"
+      display: 'flex',
+      flexDirection: 'row'
     },
     coordinates: {
         width: 100
@@ -25,50 +25,41 @@ const styles = {
   
 const TaskForm = ({ classes }) => {
     const coordinates = useSelector((state)=> state.coordinates)
-    const [task, setTask] = useState({
-        content: '',
-    })
-    const dispatch = useDispatch();
+    const [task, setTask] = useState('')
+    const dispatch = useDispatch()
    
-    const wirteTask = useCallback( newTask => {
-        setTask({
-            ...task,
-            [newTask.target.name]: newTask.target.value
-        })
-    }, [setTask, task])
+    const wirteTask = newTask => setTask(newTask.target.value)
     
-    const addTask = useCallback(e => {
+    const addTask = e => {
         e.preventDefault()
-        if(task.content){
+        if(task){
             dispatch(addTaskAction({ 
-                content: task.content,
+                content: task,
                 coordinates
             }))        
-            setTask({ content: '' })
+            setTask('')
         }
-    }, [setTask, task, coordinates, dispatch])
+    }
 
     return(
-        <div>
-            <form onSubmit={addTask} className={classes.root}>
-                <IconButton onClick={addTask} >
-                    <AddIcon />
-                </IconButton >
-                <FormControlLabel                        
-                    control={
-                        <InputBase
-                            name="content"   
-                            value={task.content}
-                            onChange={wirteTask}
-                            placeholder="New Task..."
-                        />
-                    }     
-                />
-                <p className={classes.coordinatePadding}>
-                    [ {parseFloat(coordinates[0]).toFixed(3)},{parseFloat(coordinates[1]).toFixed(3)} ]
-                </p>
-            </form>
-        </div>
+        <form onSubmit={addTask} className={classes.root}>
+            <IconButton onClick={addTask} >
+                <AddIcon />
+            </IconButton >
+            <FormControlLabel                        
+                control = {
+                    <InputBase
+                        name='content'   
+                        value={task}
+                        onChange={wirteTask}
+                        placeholder='New Task...'
+                    />
+                }     
+            />
+            <p className={classes.coordinatePadding}>
+                [ {parseFloat(coordinates[0]).toFixed(3)}, {parseFloat(coordinates[1]).toFixed(3)} ]
+            </p>
+        </form>
     )    
 }
 

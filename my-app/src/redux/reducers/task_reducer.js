@@ -55,12 +55,9 @@ function reducer(state, {type, payload}) {
         }
         case 'DELETE_TASK': { 
             let tasks = [...state.tasks]
-            const taskPos = tasks.map((task) => {return task._id}).indexOf(payload)
-            tasks.splice(taskPos, 1)  
-            return {               
-                ...state,                            
-                tasks
-            }
+            const taskPos = tasks.map(task => task._id).indexOf(payload)
+            tasks.splice(taskPos, 1)
+            return { ...state, tasks }
         }
         case 'CHANGE_STATUS': {
             let tasks = [...state.tasks]

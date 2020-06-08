@@ -8,21 +8,21 @@ import TasksLocations from './components/TasksLocations'
 
 const styles = {
   root: {
-    display: "flex",
-    flexDirection: "row"
+    display: 'flex',
+    flexDirection: 'row'
   },
-  right: {
-    display: "flex",
-    flexDirection: "column"
+  columnDisplay: {
+    display: 'flex',
+    flexDirection: 'column'
   }
 }
 
-function App({ classes }) {
+const App = ({ classes }) => {
   return (
     <Provider store={store} >
       <div className={classes.root}>
         <ListItemCard />
-        <div className={classes.right}>
+        <div className={classes.columnDisplay}>
           <TasksTable />
           <TasksLocations />
         </div>
