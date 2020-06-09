@@ -23,6 +23,12 @@ export const addTaskAction = (task) => {
     }
 }
 
+export const setCoordinateAction = (coordinate) => ({
+        type: 'SET_COORDINATE',
+        payload: coordinate
+    })
+
+
 export const deleteTaskAction = (id) =>{
     return dispatch => {
         return axios.delete(`/api/tasks/${id}`)

@@ -1,10 +1,10 @@
-import moment from "moment"
+import moment from 'moment'
 import Paper from '@material-ui/core/Paper'
 import Toolbar from '@material-ui/core/Toolbar'
 import Tooltip from '@material-ui/core/Tooltip' 
-import React, { useCallback, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import IconButton from "@material-ui/core/IconButton"
+import IconButton from '@material-ui/core/IconButton'
 import { useDispatch, useSelector } from 'react-redux'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import { changeIsHideTableFlagAction } from '../redux/actions/task_action'
@@ -13,7 +13,7 @@ import { Grid, VirtualTable, TableHeaderRow } from '@devexpress/dx-react-grid-ma
 
 const styles = {
     root: {
-        height: 350,
+        height: 280,
         width: 765,
         borderRadius: 6,
         marginLeft: 20,
@@ -22,38 +22,37 @@ const styles = {
         paddingLeft: 20,
     }, 
     filterIcon: {
-        paddingTop: 30,
-        paddingLeft: 0,
+        padding: 0,
+        paddingTop: 20
     }
 }
 
 const TasksTable = ({ classes }) => {
     const dispatch = useDispatch() 
-    const tasks = useSelector((state) => state.tasks)
-    const isHideTasks = useSelector((state) => state.isHideTasksTable)
+    const isHideTasks = useSelector(state => state.isHideTasksTable)
+    const tasksFromdb = useSelector(state => state.tasks)
+    const tasks = isHideTasks ? tasksFromdb.filter(task => !task.status) : tasksFromdb
     const [ filtered, setFilter ] = useState(false)
 
-    const filterTable = useCallback(() => {
+    const filterTable = useMemo(() => () => {
         dispatch(changeIsHideTableFlagAction())
         setFilter(!filtered)
-    }, [ dispatch, setFilter, filtered ])
+    }, [])
     
     const columns = [
-        { name: 'content', title: "Task" },
+        { name: 'content', title: 'Task' },
         { name: 'date', title: 'Date'},
         { name: 'coordinates', title: 'Coordinates' },
         { name: 'status', title: 'Is Done?' }
     ] 
 
-    const taskToRows = isHideTasks ? tasks.filter( t => !t.status) : tasks
-    
-    const rows = taskToRows.map(task => {
+    const rows = tasks.map(task => {
         return ({
             id: task._id, 
             content: task.content,
-            status: task.status ? "True": "False",
-            date: moment(task.date).format("MMM Do YY"),
-            coordinates: `[${task.coordinates}]`
+            status: task.status ? 'True': 'False',
+            date: moment(task.date).format('MMM Do YY'),
+            coordinates: `[${parseFloat(task.coordinates[0]).toFixed(3)},${parseFloat(task.coordinates[1]).toFixed(3)}]`
         })
     })
         
@@ -79,11 +78,11 @@ const TasksTable = ({ classes }) => {
             <Grid rows={rows} columns={columns} >
                 <SortingState />
                 <IntegratedSorting columnExtensions={sortColumnPlugin}/>
-                <VirtualTable height='250px'/>
+                <VirtualTable height='200px'/>
                 <TableHeaderRow showSortingControls/>  
                 <Toolbar >
-                    <Tooltip title="Hide The Tasks You Are Done With"> 
-                        <IconButton className={classes.filterIcon} color={filtered ? "secondary" : 'default'}>
+                    <Tooltip title='Hide The Tasks You Are Done With'> 
+                        <IconButton className={classes.filterIcon} color={filtered ? 'secondary' : 'default'}>
                             <FilterListIcon onClick={filterTable} /> 
                         </IconButton>
                     </Tooltip>  
