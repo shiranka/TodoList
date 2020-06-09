@@ -1,6 +1,6 @@
+import React from 'react'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
-import React, { useCallback } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import Checkbox from '@material-ui/core/Checkbox'
 import ListItem from '@material-ui/core/ListItem'
@@ -30,8 +30,8 @@ const styles = {
 const Task = ({ classes, task }) => {
     const dateAndPoint= `${moment(task.date).format('MMM Do YY')} at [${parseFloat(task.coordinates[0]).toFixed(3)},${parseFloat(task.coordinates[1]).toFixed(3)}]`
     const dispatch = useDispatch()
-    const changeStatus = useCallback(taskToCheck => () => dispatch(changeStatusAction(taskToCheck)), [dispatch])
-    const deleteTask = useCallback(id => () => dispatch(deleteTaskAction(id)), [dispatch])
+    const changeStatus = taskToCheck => () => dispatch(changeStatusAction(taskToCheck))
+    const deleteTask = id => () => dispatch(deleteTaskAction(id))
 
     return (
         <ListItem divider='true' className={classes.root} secondary={task.date} >   

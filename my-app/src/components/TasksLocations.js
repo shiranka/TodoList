@@ -93,12 +93,12 @@ const TasksLocations = ({ classes }) => {
   }, [])
 
   return (
-    <>
+    <React.Fragment>
       <div className={classes.root} id='map' />      
       <div ref={container} className={classes.popup}>
         <div ref={content} />
       </div>
-    </>
+    </React.Fragment>
   )
 }
 

@@ -24,7 +24,7 @@ const styles = {
 }
   
 const TaskForm = ({ classes }) => {
-    const coordinates = useSelector((state)=> state.coordinates)
+    const coordinates = useSelector(state=> state.coordinates)
     const [task, setTask] = useState('')
     const dispatch = useDispatch()
    
@@ -32,7 +32,7 @@ const TaskForm = ({ classes }) => {
     
     const addTask = e => {
         e.preventDefault()
-        if(task){
+        if(task) {
             dispatch(addTaskAction({ 
                 content: task,
                 coordinates
