@@ -16,8 +16,10 @@ const styles = {
 
 const TasksList = ({ classes }) => {
     const dispatch = useDispatch()
-    const tasks = useSelector(state => state.isHideTasksList ? state.tasks.filter(task => !task.status) : state.tasks)
-
+    const isHideTasks = useSelector(state => state.isHideTasksList)
+    const tasksFromdb = useSelector(state => state.tasks)
+    const tasks = isHideTasks ? tasksFromdb.filter(task => !task.status) : tasksFromdb
+  
     useEffect(() => dispatch(getTasksAction()), [])
     
     const tasksList = tasks.length ? (

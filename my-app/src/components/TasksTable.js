@@ -2,7 +2,7 @@ import moment from 'moment'
 import Paper from '@material-ui/core/Paper'
 import Toolbar from '@material-ui/core/Toolbar'
 import Tooltip from '@material-ui/core/Tooltip' 
-import React, { useCallback, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,13 +29,15 @@ const styles = {
 
 const TasksTable = ({ classes }) => {
     const dispatch = useDispatch() 
-    const tasks = useSelector(state => state.isHideTasksTable ? state.tasks.filter(task => !task.status) : state.tasks)
+    const isHideTasks = useSelector(state => state.isHideTasksTable)
+    const tasksFromdb = useSelector(state => state.tasks)
+    const tasks = isHideTasks ? tasksFromdb.filter(task => !task.status) : tasksFromdb
     const [ filtered, setFilter ] = useState(false)
 
-    const filterTable = useCallback(() => {
+    const filterTable = useMemo(() => () => {
         dispatch(changeIsHideTableFlagAction())
         setFilter(!filtered)
-    }, [ dispatch, setFilter, filtered ])
+    }, [])
     
     const columns = [
         { name: 'content', title: 'Task' },

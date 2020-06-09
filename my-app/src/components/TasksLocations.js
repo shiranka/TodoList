@@ -56,11 +56,13 @@ const TasksLocations = ({ classes }) => {
   const container = useRef()
   const dispatch = useDispatch()
   const [map, setMap] = useState()
-  const tasks = useSelector(state => state.isHideTasksTable ? state.tasks.filter(task => !task.status) : state.tasks)
+  const isHideTasks = useSelector(state => state.isHideTasksTable)
+  const tasksFromdb = useSelector(state => state.tasks)
+  const tasks = isHideTasks ? tasksFromdb.filter(task => !task.status) : tasksFromdb
   
   useEffect(() => {
     if (map) {
-      const l = map.getLayers().forEach(layer => layer.get('name') === 'markersLayer' && map.removeLayer(layer))
+      map.getLayers().forEach(layer => layer.get('name') === 'markersLayer' && map.removeLayer(layer))
       const markers = tasks.map(task => 
         new Feature({ 
           content: task.content,
